@@ -13,7 +13,7 @@ resource "aws_subnet"  "skills-pub-a"  {
   availability_zone = "ap-northeast-2a"
 
   tags = {
-    Name = "wsi-public-a"
+    Name = "skills-pub-a"
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_subnet"  "skills-priv-a"  {
   availability_zone = "ap-northeast-2a"
 
   tags = {
-    Name = "vpc-skills-a"
+    Name = "skills-priv-a"
   }
 }
 
