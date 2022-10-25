@@ -19,7 +19,7 @@ resource "aws_subnet"  "wsi-public-a"  {
 
 resource "aws_subnet"  "wsi-public-b"  {
   vpc_id     = aws_vpc.wsi-vpc.id
-  cidr_block = "10.1.2.0/24"
+  cidr_block = "10.1.3.0/24"
   map_public_ip_on_launch = true
   availability_zone = "ap-northeast-2b"
 
@@ -78,15 +78,15 @@ resource "aws_route_table_association" "wsi-public-rt-assoc-b" {
   subnet_id = aws_subnet.wsi-public-b.id
 }
 
-resource "aws_route_table" "wsi-private-rt-a" {
+resource "aws_route_table" "wsi-private-a-rt" {
   vpc_id = aws_vpc.wsi-vpc.id
   tags   = {
-    Name = "wsi-private-rt-a"
+    Name = "wsi-private-a-rt"
   }
 }
 
-resource "aws_route_table_association" "wsi-private-rt-a-assoc" {
-  route_table_id = aws_route_table.wsi-private-rt-a.id
+resource "aws_route_table_association" "wsi-private-a-rt-assoc" {
+  route_table_id = aws_route_table.wsi-private-a-rt.id
   subnet_id = aws_subnet.wsi-private-a.id
 }
 
@@ -107,20 +107,20 @@ resource "aws_nat_gateway" "wsi-nat-a" {
 }
 
 resource "aws_route" "wsi-private-nat-route-a" {
-  route_table_id = aws_route_table.wsi-private-rt-a.id
+  route_table_id = aws_route_table.wsi-private-a-rt.id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.wsi-nat-a.id
 }
 
-resource "aws_route_table" "wsi-private-rt-b" {
+resource "aws_route_table" "wsi-private-b-rt" {
   vpc_id = aws_vpc.wsi-vpc.id
   tags   = {
-    Name = "wsi-private-rt-b"
+    Name = "wsi-private-b-rt"
   }
 }
 
-resource "aws_route_table_association" "wsi-private-rt-b-assoc" {
-  route_table_id = aws_route_table.wsi-private-rt-b.id
+resource "aws_route_table_association" "wsi-private-b-rt-assoc" {
+  route_table_id = aws_route_table.wsi-private-b-rt.id
   subnet_id = aws_subnet.wsi-private-b.id
 }
 
@@ -141,7 +141,7 @@ resource "aws_nat_gateway" "wsi-nat-b" {
 }
 
 resource "aws_route" "wsi-private-nat-route-b" {
-  route_table_id = aws_route_table.wsi-private-rt-b.id
+  route_table_id = aws_route_table.wsi-private-b-rt.id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.wsi-nat-b.id
 }
