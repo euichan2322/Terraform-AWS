@@ -60,7 +60,7 @@ resource "aws_s3_bucket_website_configuration" "index-static-web" {
   }
 }
 
-# 63~105 row loading-bucket 
+# 63~116 row loading-bucket 
 resource "aws_s3_bucket" "loading-bucket" {
   bucket = "loading${local.date_br}"
 }
@@ -101,5 +101,16 @@ resource "aws_s3_bucket_website_configuration" "loading-static-web" {
 
   index_document {
     suffix = "loading.html"
+  }
+}
+
+resource "aws_s3_bucket_cors_configuration" "loading-cors" {
+  bucket = aws_s3_bucket.loading-bucket.id
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["HEAD", "GET"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag", "x-amz-meta-custom-header"]
   }
 }
